@@ -14,7 +14,6 @@ class Note(models.Model):
 class NoteElement(models.Model):
     tag = models.TextField()
     content = models.TextField()
-    note = models.ForeignKey(Note, on_delete=models.CASCADE)
-
+    note = models.ForeignKey(Note, related_name='note_elements', on_delete=models.CASCADE)
     def __str__(self):
         return f'{self.tag}, {self.note.id}'
