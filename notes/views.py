@@ -1,9 +1,8 @@
-from django.shortcuts import render
-from rest_framework.decorators import api_view
+from django.shortcuts import render, get_object_or_404
+from rest_framework.decorators import api_view 
 from rest_framework.response import Response
 from .models import Note
 from .serializers import NoteSerializer
-
 
 @api_view (['GET','POST'])
 def note_list(request):
@@ -41,3 +40,21 @@ def note_detail(request, note_id):
     elif request.method == 'DELETE':
         note.delete()
         return Response(status=200)
+
+
+@api_view(['POST'])
+def note_publish(request, note_id):
+    the_note = get_object_or_404(Note,pk=note_id) 
+
+    if request.method == 'POST':
+        the_note.published = True
+        the_note.save()
+
+        the_note_serializer = NoteSerializer(data=the_note_data)
+        if the_note_serializer.is_valid():
+            the_note_serializer.save()
+            return Response(the_note_serializer.data, status=200)
+        else:
+            return Response(the_note_serializer.errors, status=400)
+
+        

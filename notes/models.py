@@ -1,11 +1,10 @@
 from django.db import models
 
-
-
 class Note(models.Model):
     created_date = models.DateField(auto_now=True)
     modified_date = models.DateField()
     user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+    published = models.BooleanField(default=False)
 
 
     def __str__(self):
