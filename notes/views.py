@@ -46,7 +46,7 @@ def note_detail(request, note_id):
 
 
 @api_view(['GET','PUT'])
-def detail_view(request, user_id):
+def user_detail(request, user_id):
     user = get_object_or_404(User, pk=user_id)
     
     if request.method == 'GET':
