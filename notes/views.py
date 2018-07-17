@@ -1,5 +1,4 @@
 from django.shortcuts import render, get_object_or_404
-from rest_framework.decorators import api_view
 from rest_framework.decorators import api_view 
 from rest_framework.response import Response
 from .models import Note
@@ -78,3 +77,15 @@ def note_publish(request, note_id):
         else:
             return Response(the_note_serializer.errors, status=400)
 
+@api_view (['POST'])
+def note_done (request):
+    note = get_object_or_404(note, pk=is_done_id)
+    if request.method == 'POST':
+        is_done_data = True
+        note_data.save()
+        note_serializer = NoteSerializer(data=is_done_data)
+        note_serializer.save()
+        return Response(note_serializer.data, status=200) 
+    else:
+        return Response(note_serializer.error, status=400)
+           
