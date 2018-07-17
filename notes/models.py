@@ -1,6 +1,7 @@
 from django.db import models
 
 
+
 class Note(models.Model):
     created_date = models.DateField(auto_now=True)
     modified_date = models.DateField()
@@ -18,3 +19,11 @@ class NoteElement(models.Model):
 
     def __str__(self):
         return f'{self.tag}, {self.note.id}'
+
+class Comment(models.Model):
+    author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+    content = models.TextField()
+    note = models.ForeignKey(Note, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.author}: {self.content}'
