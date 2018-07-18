@@ -2,13 +2,20 @@ from .base import *
 
 DEBUG = False
 
-# TODO [Marc] replace this with dynamic stuff from ENV
-# SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = os.environ['SECRET_KEY']
 
-ALLOWED_HOSTS = ['notes.girlsgoit.org']
+ALLOWED_HOSTS = ['notes.girlsgoit.org', 'notes-api.girlsgoit.org']
+CORS_ORIGIN_WHITELIST = ('notes.girlsgoit.org', 'notes-api.girlsgoit.org')
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.SessionAuthentication',
     )
+}
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, '../db.sqlite3'),
+    }
 }
