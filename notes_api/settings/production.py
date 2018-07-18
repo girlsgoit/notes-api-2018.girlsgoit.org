@@ -4,8 +4,8 @@ DEBUG = False
 
 SECRET_KEY = os.environ['SECRET_KEY']
 
-ALLOWED_HOSTS = ['notes.girlsgoit.org', 'notes-api.girlsgoit.org']
-CORS_ORIGIN_WHITELIST = ('notes.girlsgoit.org', 'notes-api.girlsgoit.org')
+ALLOWED_HOSTS = ['notes.girlsgoit.org', 'notes-api.girlsgoit.org', 'ggit-notes-api.azurewebsites.net']
+CORS_ORIGIN_WHITELIST = ('notes.girlsgoit.org', 'notes-api.girlsgoit.org', 'ggit-notes-api.azurewebsites.net')
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
