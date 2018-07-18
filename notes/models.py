@@ -19,6 +19,9 @@ class Note(models.Model):
     def __str__(self):
         return 'Created date: {}, User: {}'.format(self.created_date, self.user.username)
 
+    def get_first_note_element(self):
+        return self.note_elements.all()[:1]
+
 
 class NoteElement(models.Model):
     tag = models.TextField()
