@@ -15,6 +15,7 @@ def note_list(request):
 
     elif request.method == 'POST':
         note_data = request.data
+        note_data['user'] = request.user.id
         note_serializer = NoteSerializer(data=note_data)
         if note_serializer.is_valid():
             note_serializer.save()
@@ -33,6 +34,7 @@ def note_detail(request, note_id):
 
     elif request.method == 'PUT':
         new_note_data = request.data
+        new_note_data['user'] = request.user.id
         note_serializer = NoteSerializer(note, new_note_data)
         if note_serializer.is_valid():
             note_serializer.save()
