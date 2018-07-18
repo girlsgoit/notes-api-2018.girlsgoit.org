@@ -73,13 +73,6 @@ def note_publish(request, note_id):
         the_note_serializer = NoteSerializer(the_note)
         return Response(the_note_serializer.data, status=200)
 
-<<<<<<< HEAD
-        the_note_serializer = NoteSerializer(data=the_note_data)
-        if the_note_serializer.is_valid():
-            the_note_serializer.save()
-            return Response(the_note_serializer.data, status=200)
-        else:
-            return Response(the_note_serializer.errors, status=400)
 
 @api_view(['POST'])
 def user_unique(request):
@@ -91,7 +84,7 @@ def user_unique(request):
         else:
             return Response(status=200)
         
-=======
+        
 @api_view (['POST'])
 def note_done (request,note_id):
     note = get_object_or_404(Note, pk=note_id)
