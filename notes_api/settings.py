@@ -37,8 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
     'notes',
-    'rest_framework'
 ]
 
 MIDDLEWARE = [
@@ -52,6 +52,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'notes_api.urls'
+AUTH_USER_MODEL = 'notes.GGITUser'
+
 
 TEMPLATES = [
     {

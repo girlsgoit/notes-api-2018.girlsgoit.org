@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from datetime import datetime
-from .models import NoteElement, Note, Comment
+from .models import NoteElement, Note, Comment, GGITUser
 
 class NoteElementSerializer(serializers.ModelSerializer):
     class Meta:
@@ -10,9 +10,9 @@ class NoteElementSerializer(serializers.ModelSerializer):
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = User
+        model = GGITUser
         fields = '__all__'
-        
+
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
@@ -20,9 +20,9 @@ class CommentSerializer(serializers.ModelSerializer):
 
 
 class NoteSerializer(serializers.ModelSerializer):
-    
+
     note_elements = NoteElementSerializer(many=True)
-    
+
     class Meta:
         model = Note
         fields = '__all__'
@@ -45,7 +45,7 @@ class NoteSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         note_elements = validated_data['note_elements']
         instance.note_elements.all().delete()
-       
+
         for note_element in note_elements:
             NoteElement.objects.create(
                 tag=note_element['tag'],
