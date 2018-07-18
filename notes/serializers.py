@@ -25,7 +25,7 @@ class CommentSerializer(serializers.ModelSerializer):
 
 
 class NoteSerializer(serializers.ModelSerializer):
-    note_elements = NoteElementSerializer(many=True)
+    note_elements = NoteElementSerializer(source='get_first_note_element',many=True)
 
     class Meta:
         model = Note
