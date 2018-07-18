@@ -5,7 +5,6 @@ from rest_framework.response import Response
 from .models import Note, GGITUser
 from .serializers import NoteSerializer, UserSerializer
 
-
 @api_view (['GET', 'POST'])
 def note_list(request):
     if request.method == 'GET':
@@ -57,7 +56,7 @@ def note_publish(request, note_id):
 
 
 @api_view (['POST'])
-def note_done (request,note_id):
+def note_done(request,note_id):
     note = get_object_or_404(Note, pk=note_id)
 
     if request.method == 'POST':
@@ -94,3 +93,17 @@ def user_detail(request, user_id):
             return Response(user_serializer.data, status=200)
         else:
             return Response(user_serializer.error, status=400)
+
+
+@api_view (['POST'])
+def user_register(request):
+    if request.method == 'POST':
+        form = RegisterSerializer(request.data)
+        if request.data['password'] == request.data['confirm_password']:
+            if form.is_valid():
+                form.save()
+                return Response(status=200)
+            else:
+                return Response(form.data, status=400)
+        else:
+            return HttpResponse("Your passwords don't match", status=400)
