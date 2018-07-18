@@ -109,3 +109,9 @@ def user_register(request):
                 return Response(form.data, status=400)
         else:
             return HttpResponse("Your passwords don't match", status=400)
+
+
+@api_view (['POST'])
+def login(request):
+    if request.method == 'POST':
+        print(request.data['username'], request.data['password'])
