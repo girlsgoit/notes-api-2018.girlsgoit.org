@@ -19,7 +19,7 @@ def note_list(request):
             note_serializer.save()
             return Response(note_serializer.data)
         else:
-            return Response(note_serializer.error, status=400)
+            return Response(note_serializer.errors, status=400)
 
 
 @api_view(['GET','PUT','DELETE'])

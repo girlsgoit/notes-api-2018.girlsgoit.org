@@ -2,8 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class Note(models.Model):
-    created_date = models.DateField(auto_now=True)
-    modified_date = models.DateField()
+    created_date = models.DateField(auto_now_add=True)
+    modified_date = models.DateField(auto_now=True)
     user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     published = models.BooleanField(default=False)
     is_done = models.BooleanField(default=False)
