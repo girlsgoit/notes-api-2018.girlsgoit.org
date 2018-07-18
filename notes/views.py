@@ -2,8 +2,9 @@ from django.shortcuts import render, get_object_or_404
 from rest_framework.decorators import api_view 
 from rest_framework.response import Response
 from .models import Note
-from .serializers import NoteSerializer, UserSerializer
+from .serializers import  UserSerializer,NoteSerializer
 from django.contrib.auth.models import User
+
 
 
 @api_view (['GET','POST'])
@@ -69,7 +70,10 @@ def note_publish(request, note_id):
     if request.method == 'POST':
         the_note.published = True
         the_note.save()
+        the_note_serializer = NoteSerializer(the_note)
+        return Response(the_note_serializer.data, status=200)
 
+<<<<<<< HEAD
         the_note_serializer = NoteSerializer(data=the_note_data)
         if the_note_serializer.is_valid():
             the_note_serializer.save()
@@ -77,15 +81,22 @@ def note_publish(request, note_id):
         else:
             return Response(the_note_serializer.errors, status=400)
 
-@api_view (['POST'])
-def note_done (request):
-    note = get_object_or_404(note, pk=is_done_id)
+@api_view(['POST'])
+def user_unique(request):
+    new_username = User.objects.filter(username=request.data['username']) 
+
     if request.method == 'POST':
-        is_done_data = True
-        note_data.save()
-        note_serializer = NoteSerializer(data=is_done_data)
-        note_serializer.save()
+        if new_username.exists():
+            return Response(status=400)
+        else:
+            return Response(status=200)
+        
+=======
+@api_view (['POST'])
+def note_done (request,note_id):
+    note = get_object_or_404(Note, pk=note_id)
+    if request.method == 'POST':
+        note.is_done = True
+        note.save()
+        note_serializer = NoteSerializer(note)
         return Response(note_serializer.data, status=200) 
-    else:
-        return Response(note_serializer.error, status=400)
-           
