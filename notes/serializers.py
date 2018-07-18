@@ -1,6 +1,4 @@
 from rest_framework import serializers
-from django.contrib.auth.models import User
-from datetime import datetime
 from .models import NoteElement, Note, Comment, GGITUser
 
 class NoteElementSerializer(serializers.ModelSerializer):
@@ -39,7 +37,6 @@ class NoteSerializer(serializers.ModelSerializer):
                 content=note_element['content'],
                 note=note_obj
             )
-
         return note_obj
 
     def update(self, instance, validated_data):
@@ -54,5 +51,4 @@ class NoteSerializer(serializers.ModelSerializer):
             )
 
         instance.save()
-
         return instance

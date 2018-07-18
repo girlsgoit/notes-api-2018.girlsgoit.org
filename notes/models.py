@@ -15,7 +15,7 @@ class Note(models.Model):
     is_done = models.BooleanField(default=False)
 
     def __str__(self):
-        return f'Created date: {self.created_date}, modified date: {self.modified_date}, user: {self.user},{self.is_done}'
+        return f'Created date: {self.created_date}, User: {self.user.username}'
 
 
 class NoteElement(models.Model):
@@ -24,7 +24,7 @@ class NoteElement(models.Model):
     note = models.ForeignKey(Note, related_name='note_elements', on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'{self.tag}, {self.note.id}'
+        return f'Tag: {self.tag}, Note: {self.note.id}'
 
 class Comment(models.Model):
     author = models.ForeignKey(GGITUser, related_name='comments', on_delete=models.CASCADE)
