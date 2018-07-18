@@ -18,5 +18,5 @@ urlpatterns = [
     path('users/is-unique/', user_unique, name='user_is_unique'),
     path('users/register/', user_register, name='user_register'),
     path('auth/login', login, name='login'),
-    path('auth/logout/', user_logout, name='user_logout'),
+    path('auth/logout/', user_logout, name='user_logout')
 ]
