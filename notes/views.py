@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -5,7 +6,8 @@ from rest_framework.response import Response
 from .models import Note, GGITUser
 from .serializers import NoteSerializer, UserSerializer
 
-@api_view (['GET', 'POST'])
+
+@api_view(['GET', 'POST'])
 def note_list(request):
     if request.method == 'GET':
         notes = Note.objects.all()
@@ -48,7 +50,7 @@ def note_detail(request, note_id):
 
 @api_view(['POST'])
 def note_publish(request, note_id):
-    note = get_object_or_404(Note,pk=note_id)
+    note = get_object_or_404(Note, pk=note_id)
 
     if request.method == 'POST':
         note.published = True
@@ -57,8 +59,8 @@ def note_publish(request, note_id):
         return Response(note_serializer.data, status=200)
 
 
-@api_view (['POST'])
-def note_done(request,note_id):
+@api_view(['POST'])
+def note_done(request, note_id):
     note = get_object_or_404(Note, pk=note_id)
 
     if request.method == 'POST':
@@ -97,32 +99,32 @@ def user_detail(request, user_id):
             return Response(user_serializer.error, status=400)
 
 
-@api_view (['POST'])
+@api_view(['POST'])
 def user_register(request):
     if request.method == 'POST':
         if request.data['password'] == request.data['confirm_password']:
             user = UserSerializer(data=request.data)
-            if  user.is_valid():
+            if user.is_valid():
                 user.save()
-                return Response(user.data,status=200)
+                return Response(user.data, status=200)
             else:
                 return Response(user.errors, status=400)
         else:
-<<<<<<< HEAD
             return HttpResponse("Your passwords don't match", status=400)
 
 
-@api_view (['POST'])
+@api_view(['POST'])
 def login(request):
     if request.method == 'POST':
-        print(request.data['username'], request.data['password'])
-=======
-            return Response(status=400)
+        username = request.data['username']
+        password = request.data['password']
 
-@api_view (['POST'])
+
+
+        return Response(status=400)
+
+
+@api_view(['POST'])
 def user_logout(request):
     if request.method == 'POST':
         print(request.user.id)
-
-        
->>>>>>> b58e86166e5c2c2f646b2a1a2934790c1fb9449b
