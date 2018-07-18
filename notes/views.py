@@ -10,7 +10,7 @@ from .serializers import NoteSerializer, UserSerializer
 @api_view(['GET', 'POST'])
 def note_list(request):
     if request.method == 'GET':
-        notes = Note.objects.all()
+        notes = Note.objects.filter(user=request.user)
         notes_serializer = NoteSerializer(notes, many=True)
         return Response(notes_serializer.data, status=200)
 
