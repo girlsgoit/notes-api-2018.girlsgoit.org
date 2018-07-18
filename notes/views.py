@@ -70,7 +70,7 @@ def note_done(request,note_id):
 
 @api_view(['POST'])
 def user_unique(request):
-    users = User.objects.filter(username=request.data['username'])
+    users = GGITUser.objects.filter(username=request.data['username'])
 
     if request.method == 'POST':
         if users.exists():
