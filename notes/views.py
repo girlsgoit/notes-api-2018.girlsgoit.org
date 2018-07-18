@@ -70,11 +70,6 @@ def note_publish(request, note_id):
     if request.method == 'POST':
         the_note.published = True
         the_note.save()
-
-        the_note_serializer = NoteSerializer(data=the_note_data)
-        if the_note_serializer.is_valid():
-            the_note_serializer.save()
-            return Response(the_note_serializer.data, status=200)
-        else:
-            return Response(the_note_serializer.errors, status=400)
+        the_note_serializer = NoteSerializer(the_note)
+        return Response(the_note_serializer.data, status=200)
 
