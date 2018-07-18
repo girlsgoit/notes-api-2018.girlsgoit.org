@@ -6,7 +6,7 @@ class GGITUser(AbstractUser):
     settings = models.TextField(blank=True, null=True)
 
     def __str__(self):
-        return f"{self.username}"
+        return '{}'.format(self.username)
 
 
 class Note(models.Model):
