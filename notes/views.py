@@ -1,6 +1,10 @@
+from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
-from rest_framework.decorators import api_view
+from django.contrib.auth import login as auth_login, logout as auth_logout
+from django.template.context_processors import csrf
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from .models import Note, GGITUser
@@ -8,6 +12,7 @@ from .serializers import NoteSerializer, UserSerializer
 
 
 @api_view(['GET', 'POST'])
+@permission_classes((IsAuthenticated, ))
 def note_list(request):
     if request.method == 'GET':
         notes = Note.objects.all()
@@ -26,6 +31,7 @@ def note_list(request):
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
+@permission_classes((IsAuthenticated, ))
 def note_detail(request, note_id):
     note = get_object_or_404(Note, pk=note_id)
 
@@ -49,6 +55,7 @@ def note_detail(request, note_id):
 
 
 @api_view(['POST'])
+@permission_classes((IsAuthenticated, ))
 def note_publish(request, note_id):
     note = get_object_or_404(Note, pk=note_id)
 
@@ -60,6 +67,7 @@ def note_publish(request, note_id):
 
 
 @api_view(['POST'])
+@permission_classes((IsAuthenticated, ))
 def note_done(request, note_id):
     note = get_object_or_404(Note, pk=note_id)
 
@@ -82,6 +90,7 @@ def user_unique(request):
 
 
 @api_view(['GET', 'PUT'])
+@permission_classes((IsAuthenticated, ))
 def user_detail(request, user_id):
     user = get_object_or_404(GGITUser, pk=user_id)
 
@@ -114,17 +123,26 @@ def user_register(request):
 
 
 @api_view(['POST'])
-def login(request):
+def user_login(request):
     if request.method == 'POST':
         username = request.data['username']
         password = request.data['password']
 
+        try:
+            user = GGITUser.objects.get(username=username)
 
+            if user.check_password(password):
+                auth_login(request, user)
+                serializer = UserSerializer(user)
+                return Response(serializer.data, status=200)
+        except GGITUser.DoesNotExist:
+            pass
 
-        return Response(status=400)
+        return Response(status=400, data={'message': 'Username or password is incorrect.'})
 
 
 @api_view(['POST'])
 def user_logout(request):
     if request.method == 'POST':
-        print(request.user.id)
+        auth_logout(request)
+        return Response(status=200)

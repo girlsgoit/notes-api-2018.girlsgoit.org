@@ -1,15 +1,22 @@
 from rest_framework import serializers
 from .models import NoteElement, Note, Comment, GGITUser
 
+
 class NoteElementSerializer(serializers.ModelSerializer):
     class Meta:
         model = NoteElement
         exclude = ['id', 'note']
 
+
 class UserSerializer(serializers.ModelSerializer):
+
+    firstName = serializers.CharField(source='first_name')
+    lastName = serializers.CharField(source='last_name')
+
     class Meta:
         model = GGITUser
-        fields = '__all__'
+        fields = ['id', 'username', 'firstName', 'lastName', 'settings']
+
 
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
@@ -18,7 +25,6 @@ class CommentSerializer(serializers.ModelSerializer):
 
 
 class NoteSerializer(serializers.ModelSerializer):
-
     note_elements = NoteElementSerializer(many=True)
 
     class Meta:

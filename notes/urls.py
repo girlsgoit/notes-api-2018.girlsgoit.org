@@ -7,7 +7,8 @@ from .views import (
     user_detail,
     user_unique,
     user_register,
-    login, user_logout)
+    user_login,
+    user_logout)
 
 urlpatterns = [
     path('notes/', note_list, name='note_list'),
@@ -17,6 +18,6 @@ urlpatterns = [
     path('users/<int:user_id>', user_detail, name='user_detail'),
     path('users/is-unique/', user_unique, name='user_is_unique'),
     path('users/register/', user_register, name='user_register'),
-    path('auth/login/', login, name='login'),
+    path('auth/login/', user_login, name='user_login'),
     path('auth/logout/', user_logout, name='user_logout'),
 ]
