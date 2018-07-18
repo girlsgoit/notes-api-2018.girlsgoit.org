@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from rest_framework.decorators import api_view 
 from rest_framework.response import Response
 from .models import Note
-from .serializers import NoteSerializer, UserSerializer
+from .serializers import  UserSerializer,NoteSerializer
 from django.contrib.auth.models import User
 
 
@@ -78,14 +78,12 @@ def note_publish(request, note_id):
             return Response(the_note_serializer.errors, status=400)
 
 @api_view (['POST'])
-def note_done (request):
-    note = get_object_or_404(note, pk=is_done_id)
+def note_done (request,note_id):
+    note = get_object_or_404(Note, pk=note_id)
     if request.method == 'POST':
-        is_done_data = True
-        note_data.save()
-        note_serializer = NoteSerializer(data=is_done_data)
-        note_serializer.save()
+        note.is_done = True
+        note.save()
+        note_serializer = NoteSerializer(note)
         return Response(note_serializer.data, status=200) 
-    else:
-        return Response(note_serializer.error, status=400)
+       
            
