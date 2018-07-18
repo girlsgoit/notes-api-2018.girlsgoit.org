@@ -109,3 +109,10 @@ def user_register(request):
                 return Response(user.errors, status=400)
         else:
             return Response(status=400)
+
+@api_view (['POST'])
+def user_logout(request):
+    if request.method == 'POST':
+        print(request.user.id)
+
+        
