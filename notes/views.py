@@ -7,6 +7,7 @@ from .serializers import NoteSerializer, UserSerializer
 from django.contrib.auth.models import User
 
 
+
 @api_view (['GET','POST'])
 def note_list(request):
     if request.method == 'GET':
@@ -78,3 +79,13 @@ def note_publish(request, note_id):
         else:
             return Response(the_note_serializer.errors, status=400)
 
+@api_view(['POST'])
+def user_unique(request):
+    new_username = User.objects.filter(username=request.data['username']) 
+
+    if request.method == 'POST':
+        if new_username.exists():
+            return Response(status=400)
+        else:
+            return Response(status=200)
+        
