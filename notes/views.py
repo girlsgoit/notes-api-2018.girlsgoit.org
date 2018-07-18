@@ -100,14 +100,15 @@ def user_detail(request, user_id):
 @api_view (['POST'])
 def user_register(request):
     if request.method == 'POST':
-        form = RegisterSerializer(request.data)
         if request.data['password'] == request.data['confirm_password']:
-            if form.is_valid():
-                form.save()
-                return Response(status=200)
+            user = UserSerializer(data=request.data)
+            if  user.is_valid():
+                user.save()
+                return Response(user.data,status=200)
             else:
-                return Response(form.data, status=400)
+                return Response(user.errors, status=400)
         else:
+<<<<<<< HEAD
             return HttpResponse("Your passwords don't match", status=400)
 
 
@@ -115,3 +116,13 @@ def user_register(request):
 def login(request):
     if request.method == 'POST':
         print(request.data['username'], request.data['password'])
+=======
+            return Response(status=400)
+
+@api_view (['POST'])
+def user_logout(request):
+    if request.method == 'POST':
+        print(request.user.id)
+
+        
+>>>>>>> b58e86166e5c2c2f646b2a1a2934790c1fb9449b

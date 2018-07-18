@@ -1,11 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
+
 class GGITUser(AbstractUser):
-    settings = models.TextField()
+    settings = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return f"{self.username}"
+
 
 class Note(models.Model):
     created_date = models.DateField(auto_now_add=True)
@@ -25,6 +27,7 @@ class NoteElement(models.Model):
 
     def __str__(self):
         return f'Tag: {self.tag}, Note: {self.note.id}'
+
 
 class Comment(models.Model):
     author = models.ForeignKey(GGITUser, related_name='comments', on_delete=models.CASCADE)
