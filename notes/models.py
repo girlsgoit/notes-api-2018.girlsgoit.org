@@ -17,7 +17,7 @@ class Note(models.Model):
     is_done = models.BooleanField(default=False)
 
     def __str__(self):
-        return f'Created date: {self.created_date}, User: {self.user.username}'
+        return 'Created date: {}, User: {}'.format(self.created_date, self.user.username)
 
 
 class NoteElement(models.Model):
@@ -26,7 +26,7 @@ class NoteElement(models.Model):
     note = models.ForeignKey(Note, related_name='note_elements', on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'Tag: {self.tag}, Note: {self.note.id}'
+        return 'Tag: {}, Note: {}'.format(self.tag, self.note.id)
 
 
 class Comment(models.Model):
@@ -35,4 +35,4 @@ class Comment(models.Model):
     note = models.ForeignKey(Note, related_name='comments', on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'{self.author}: {self.content}'
+        return '{}: {}'.format(self.author,  self.content)
