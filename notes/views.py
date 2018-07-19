@@ -147,7 +147,7 @@ def user_logout(request):
         return Response(status=200)
 
 
-@api_view(['GET'])
 @ensure_csrf_cookie
+@api_view(['GET'])
 def ping(request):
     return Response(status=200)
