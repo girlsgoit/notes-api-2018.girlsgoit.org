@@ -122,7 +122,6 @@ def user_register(request):
 
 
 @api_view(['POST'])
-@csrf_exempt
 def user_login(request):
     if request.method == 'POST':
         username = request.data['username']
@@ -142,7 +141,6 @@ def user_login(request):
 
 
 @api_view(['POST'])
-@csrf_exempt
 def user_logout(request):
     if request.method == 'POST':
         auth_logout(request)
