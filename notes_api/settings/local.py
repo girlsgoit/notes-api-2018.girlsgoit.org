@@ -9,8 +9,7 @@ DEBUG = True
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 ALLOWED_HOSTS = ['*', 'localhost']
-CORS_ORIGIN_WHITELIST = ('null', 'localhost:63343')
-
+CORS_ORIGIN_ALLOW_ALL = True
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
