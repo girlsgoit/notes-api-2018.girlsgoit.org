@@ -9,7 +9,7 @@ from .serializers import NoteSerializer, UserSerializer
 
 
 @api_view(['GET', 'POST'])
-@permission_classes((IsAuthenticated, ))
+@permission_classes((IsAuthenticated,))
 def note_list(request):
     if request.method == 'GET':
         notes = Note.objects.filter(user=request.user)
@@ -28,7 +28,7 @@ def note_list(request):
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
-@permission_classes((IsAuthenticated, ))
+@permission_classes((IsAuthenticated,))
 def note_detail(request, note_id):
     note = get_object_or_404(Note, pk=note_id)
 
@@ -52,7 +52,7 @@ def note_detail(request, note_id):
 
 
 @api_view(['POST'])
-@permission_classes((IsAuthenticated, ))
+@permission_classes((IsAuthenticated,))
 def note_publish(request, note_id):
     note = get_object_or_404(Note, pk=note_id)
 
@@ -64,7 +64,7 @@ def note_publish(request, note_id):
 
 
 @api_view(['POST'])
-@permission_classes((IsAuthenticated, ))
+@permission_classes((IsAuthenticated,))
 def note_done(request, note_id):
     note = get_object_or_404(Note, pk=note_id)
 
@@ -87,7 +87,7 @@ def user_unique(request):
 
 
 @api_view(['GET', 'PUT'])
-@permission_classes((IsAuthenticated, ))
+@permission_classes((IsAuthenticated,))
 def user_detail(request, user_id):
     user = get_object_or_404(GGITUser, pk=user_id)
 
@@ -144,3 +144,8 @@ def user_logout(request):
     if request.method == 'POST':
         auth_logout(request)
         return Response(status=200)
+
+
+@api_view(['GET'])
+def ping(request):
+    return Response(status=200)

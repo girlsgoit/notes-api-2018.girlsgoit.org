@@ -8,7 +8,7 @@ from .views import (
     user_unique,
     user_register,
     user_login,
-    user_logout)
+    user_logout, ping)
 
 urlpatterns = [
     path('notes/', note_list, name='note_list'),
@@ -20,4 +20,5 @@ urlpatterns = [
     path('users/register/', user_register, name='user_register'),
     path('auth/login/', user_login, name='user_login'),
     path('auth/logout/', user_logout, name='user_logout'),
+    path('ping/', ping, name='ping'),
 ]
