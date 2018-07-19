@@ -1,5 +1,6 @@
 from django.contrib.auth import login as auth_login, logout as auth_logout
 from django.shortcuts import get_object_or_404
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -121,6 +122,7 @@ def user_register(request):
 
 
 @api_view(['POST'])
+@csrf_exempt
 def user_login(request):
     if request.method == 'POST':
         username = request.data['username']
@@ -140,6 +142,7 @@ def user_login(request):
 
 
 @api_view(['POST'])
+@csrf_exempt
 def user_logout(request):
     if request.method == 'POST':
         auth_logout(request)
