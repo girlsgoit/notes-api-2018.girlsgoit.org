@@ -114,8 +114,10 @@ def user_register(request):
         password = request.data['password']
         user = UserSerializer(data=request.data)
         if user.is_valid():
-            user.set_password(password)
-            user.save()
+            user_instance = user.save()
+            user_instance.set_password(password)
+            user_instance.save()
+
             return Response(user.data, status=200)
         else:
             return Response(user.errors, status=400)
