@@ -1,6 +1,6 @@
 from django.contrib.auth import login as auth_login, logout as auth_logout
 from django.shortcuts import get_object_or_404
-from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -148,5 +148,6 @@ def user_logout(request):
 
 
 @api_view(['GET'])
+@ensure_csrf_cookie
 def ping(request):
     return Response(status=200)
