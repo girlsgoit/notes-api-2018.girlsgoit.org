@@ -12,7 +12,7 @@ from .serializers import NoteSerializer, UserSerializer
 
 
 @api_view(['GET', 'POST'])
-@permission_classes((IsAuthenticated, ))
+# @permission_classes((IsAuthenticated, ))
 def note_list(request):
     if request.method == 'GET':
         notes = Note.objects.filter(user=request.user)
@@ -31,7 +31,7 @@ def note_list(request):
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
-@permission_classes((IsAuthenticated, ))
+# @permission_classes((IsAuthenticated, ))
 def note_detail(request, note_id):
     note = get_object_or_404(Note, pk=note_id)
 
