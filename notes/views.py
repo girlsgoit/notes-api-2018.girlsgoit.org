@@ -111,8 +111,10 @@ def user_detail(request, user_id):
 @api_view(['POST'])
 def user_register(request):
     if request.method == 'POST':
+        password = request.data['password']
         user = UserSerializer(data=request.data)
         if user.is_valid():
+            user.set_password(password)
             user.save()
             return Response(user.data, status=200)
         else:
