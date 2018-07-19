@@ -1,3 +1,4 @@
+from django.conf.urls import url
 from django.urls import path
 from .views import (
     note_detail,
@@ -6,9 +7,7 @@ from .views import (
     note_publish,
     user_detail,
     user_unique,
-    user_register,
-    user_login,
-    user_logout, ping)
+    user_register, CustomAuthToken)
 
 urlpatterns = [
     path('notes/', note_list, name='note_list'),
@@ -18,7 +17,5 @@ urlpatterns = [
     path('users/<int:user_id>', user_detail, name='user_detail'),
     path('users/is-unique/', user_unique, name='user_is_unique'),
     path('users/register/', user_register, name='user_register'),
-    path('auth/login/', user_login, name='user_login'),
-    path('auth/logout/', user_logout, name='user_logout'),
-    path('ping/', ping, name='ping'),
+    url(r'^api-token-auth/', CustomAuthToken.as_view()),
 ]

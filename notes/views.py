@@ -1,6 +1,6 @@
-from django.contrib.auth import login as auth_login, logout as auth_logout
 from django.shortcuts import get_object_or_404
-from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
+from rest_framework.authtoken.models import Token
+from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -121,33 +121,15 @@ def user_register(request):
             return Response(user.errors, status=400)
 
 
-@api_view(['POST'])
-def user_login(request):
-    if request.method == 'POST':
-        username = request.data['username']
-        password = request.data['password']
+class CustomAuthToken(ObtainAuthToken):
 
-        try:
-            user = GGITUser.objects.get(username=username)
-
-            if user.check_password(password):
-                auth_login(request, user)
-                serializer = UserSerializer(user)
-                return Response(serializer.data, status=200)
-        except GGITUser.DoesNotExist:
-            pass
-
-        return Response(status=400, data={'message': 'Username or password is incorrect.'})
-
-
-@api_view(['POST'])
-def user_logout(request):
-    if request.method == 'POST':
-        auth_logout(request)
-        return Response(status=200)
-
-
-@ensure_csrf_cookie
-@api_view(['GET'])
-def ping(request):
-    return Response(status=200)
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data,
+                                           context={'request': request})
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        token, created = Token.objects.get_or_create(user=user)
+        return Response({
+            'token': token.key,
+            'user': UserSerializer(user).data,
+        })

@@ -10,7 +10,8 @@ CSRF_TRUSTED_ORIGINS = ['notes.girlsgoit.org', 'notes-api.girlsgoit.org']
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
     )
 }
 
